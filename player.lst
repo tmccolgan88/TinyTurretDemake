@@ -1,0 +1,133 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.1.6 #12439 (MINGW32)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module player
+                                      6 	.optsdcc -mgbz80
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _update
+                                     12 	.globl _initializePlayer
+                                     13 	.globl _set_sprite_data
+                                     14 	.globl _delay
+                                     15 	.globl _Turret
+                                     16 ;--------------------------------------------------------
+                                     17 ; special function registers
+                                     18 ;--------------------------------------------------------
+                                     19 ;--------------------------------------------------------
+                                     20 ; ram data
+                                     21 ;--------------------------------------------------------
+                                     22 	.area _DATA
+                                     23 ;--------------------------------------------------------
+                                     24 ; ram data
+                                     25 ;--------------------------------------------------------
+                                     26 	.area _INITIALIZED
+      000000                         27 _Turret::
+      000000                         28 	.ds 16
+                                     29 ;--------------------------------------------------------
+                                     30 ; absolute external ram data
+                                     31 ;--------------------------------------------------------
+                                     32 	.area _DABS (ABS)
+                                     33 ;--------------------------------------------------------
+                                     34 ; global & static initialisations
+                                     35 ;--------------------------------------------------------
+                                     36 	.area _HOME
+                                     37 	.area _GSINIT
+                                     38 	.area _GSFINAL
+                                     39 	.area _GSINIT
+                                     40 ;--------------------------------------------------------
+                                     41 ; Home
+                                     42 ;--------------------------------------------------------
+                                     43 	.area _HOME
+                                     44 	.area _HOME
+                                     45 ;--------------------------------------------------------
+                                     46 ; code
+                                     47 ;--------------------------------------------------------
+                                     48 	.area _CODE
+                                     49 ;player.c:16: Player *initializePlayer(){
+                                     50 ;	---------------------------------
+                                     51 ; Function initializePlayer
+                                     52 ; ---------------------------------
+      000000                         53 _initializePlayer::
+      000000 E8 F7                   54 	add	sp, #-9
+                                     55 ;player.c:18: p.canFire = true;
+      000002 F8 00                   56 	ldhl	sp,	#0
+      000004 4D                      57 	ld	c, l
+      000005 44                      58 	ld	b, h
+      000006 21 04 00                59 	ld	hl, #0x0004
+      000009 09                      60 	add	hl, bc
+      00000A 36 00                   61 	ld	(hl), #0x00
+                                     62 ;player.c:19: p.timeSinceLastUpdate = 100;
+      00000C 21 05 00                63 	ld	hl, #0x0005
+      00000F 09                      64 	add	hl, bc
+      000010 3E 64                   65 	ld	a, #0x64
+      000012 22                      66 	ld	(hl+), a
+      000013 36 00                   67 	ld	(hl), #0x00
+                                     68 ;player.c:21: set_sprite_data(0,1,Turret);
+      000015 11r00r00                69 	ld	de, #_Turret
+      000018 D5                      70 	push	de
+      000019 AF                      71 	xor	a, a
+      00001A 3C                      72 	inc	a
+      00001B F5                      73 	push	af
+      00001C CDr00r00                74 	call	_set_sprite_data
+      00001F E8 04                   75 	add	sp, #4
+                                     76 ;c:/gbdk/include/gb/gb.h:1174: shadow_OAM[nb].tile=tile;
+      000021 21r02r00                77 	ld	hl, #(_shadow_OAM + 2)
+      000024 36 00                   78 	ld	(hl), #0x00
+                                     79 ;c:/gbdk/include/gb/gb.h:1247: OAM_item_t * itm = &shadow_OAM[nb];
+      000026 21r00r00                80 	ld	hl, #_shadow_OAM
+                                     81 ;c:/gbdk/include/gb/gb.h:1248: itm->y=y, itm->x=x;
+      000029 3E 32                   82 	ld	a, #0x32
+      00002B 22                      83 	ld	(hl+), a
+      00002C 36 32                   84 	ld	(hl), #0x32
+                                     85 ;player.c:25: return &p; 
+      00002E 59                      86 	ld	e, c
+      00002F 50                      87 	ld	d, b
+                                     88 ;player.c:26: }
+      000030 E8 09                   89 	add	sp, #9
+      000032 C9                      90 	ret
+                                     91 ;player.c:27: void update(){
+                                     92 ;	---------------------------------
+                                     93 ; Function update
+                                     94 ; ---------------------------------
+      000033                         95 _update::
+                                     96 ;player.c:29: delay(2000);
+      000033 11 D0 07                97 	ld	de, #0x07d0
+      000036 D5                      98 	push	de
+      000037 CDr00r00                99 	call	_delay
+      00003A E1                     100 	pop	hl
+                                    101 ;c:/gbdk/include/gb/gb.h:1263: OAM_item_t * itm = &shadow_OAM[nb];
+      00003B 01r00r00               102 	ld	bc, #_shadow_OAM+0
+                                    103 ;c:/gbdk/include/gb/gb.h:1264: itm->y+=y, itm->x+=x;
+      00003E 0A                     104 	ld	a, (bc)
+      00003F C6 02                  105 	add	a, #0x02
+      000041 02                     106 	ld	(bc), a
+      000042 03                     107 	inc	bc
+      000043 0A                     108 	ld	a, (bc)
+      000044 C6 02                  109 	add	a, #0x02
+      000046 02                     110 	ld	(bc), a
+                                    111 ;player.c:30: scroll_sprite(0, 2,2);
+                                    112 ;player.c:31: }
+      000047 C9                     113 	ret
+                                    114 	.area _CODE
+                                    115 	.area _INITIALIZER
+      000000                        116 __xinit__Turret:
+      000000 3C                     117 	.db #0x3c	; 60
+      000001 3C                     118 	.db #0x3c	; 60
+      000002 18                     119 	.db #0x18	; 24
+      000003 18                     120 	.db #0x18	; 24
+      000004 18                     121 	.db #0x18	; 24
+      000005 18                     122 	.db #0x18	; 24
+      000006 18                     123 	.db #0x18	; 24
+      000007 18                     124 	.db #0x18	; 24
+      000008 FF                     125 	.db #0xff	; 255
+      000009 FF                     126 	.db #0xff	; 255
+      00000A BD                     127 	.db #0xbd	; 189
+      00000B C3                     128 	.db #0xc3	; 195
+      00000C BD                     129 	.db #0xbd	; 189
+      00000D C3                     130 	.db #0xc3	; 195
+      00000E FF                     131 	.db #0xff	; 255
+      00000F FF                     132 	.db #0xff	; 255
+                                    133 	.area _CABS (ABS)
