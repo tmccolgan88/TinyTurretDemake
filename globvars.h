@@ -1,0 +1,1 @@
+#define PLAYER_INDEX 0

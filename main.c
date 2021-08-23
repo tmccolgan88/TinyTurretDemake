@@ -8,10 +8,9 @@ void main(){
     SHOW_SPRITES;
 
     Player *p = initializePlayer();
+    
     while(1){
         delay(500);
-        p->playerUpdate();
+        p->playerUpdate(p->xVelocity, p->yVelocity);
     }
-
-    //printf("hello world");
 }
