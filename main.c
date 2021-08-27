@@ -7,10 +7,10 @@ void main(){
     
     SHOW_SPRITES;
 
-    Player *p = initializePlayer();
+    initializePlayer();
     
     while(1){
-        delay(500);
-        p->playerUpdate(p->xVelocity, p->yVelocity);
+        delay(17);
+        playerUpdate();
     }
 }

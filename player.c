@@ -6,31 +6,33 @@
 
 typedef enum{true, false} bool;
 
-typedef struct Player {
-  int playerPosition[2];
-  bool canFire;
-  int xVelocity;
-  int yVelocity;
-  int timeSinceLastUpdate;
+int playerPosition[2];
+bool canFire;
+int8_t xVelocity;
+int8_t yVelocity;
+int timeSinceLastUpdate;
 
-  int (* playerUpdate)(int, int);
-} Player;
+int playerUpdate();
 
-int playerUpdate(int x, int y){
-    scroll_sprite(PLAYER_INDEX, x, y);
+int playerUpdate(){
+
+    if (joypad() & J_LEFT){
+      playerPosition[0]--;
+      move_sprite(0, playerPosition[0], playerPosition[1]);
+    }
+    if(joypad() & J_RIGHT){
+      playerPosition[0]++;
+      move_sprite(0, playerPosition[0], playerPosition[1]);
+    }
     return 0;
 }
 
-Player *initializePlayer(){
-    Player * p = malloc(sizeof(Player));
-    p->canFire = true;
-    p->timeSinceLastUpdate = 100;
-    p->xVelocity = 15; 
-    p->yVelocity = 10;
-    p->playerUpdate = playerUpdate;
+int *initializePlayer(){
+    playerPosition[0] = PLAYER_X_START;
+    playerPosition[1] = PLAYER_Y_START;
     set_sprite_data(0,1,Turret);
     set_sprite_tile(0,0);
-    move_sprite(0, 50, 50);
+    move_sprite(0, playerPosition[0], playerPosition[1]);
 
-    return p; 
+    return 0; 
 }
