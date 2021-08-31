@@ -1,5 +1,4 @@
 #include <gb/gb.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include "globvars.h"
 #include "./assets/turret.c"
@@ -26,12 +25,12 @@ int playerUpdate(){
     
     //player movement logic
     if (joypad() & J_LEFT){
-      playerPosition[0]--;
-      move_sprite(0, playerPosition[0], playerPosition[1]);
+      playerPosition[X_POSITION]--;
+      move_sprite(0, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
     }
     if(joypad() & J_RIGHT){
       playerPosition[0]++;
-      move_sprite(0, playerPosition[0], playerPosition[1]);
+      move_sprite(0, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
     }
 
     //shooting logic
@@ -40,8 +39,8 @@ int playerUpdate(){
     }
 
     if (bullets != 0){
-      bullets->bulletPosition[1]--;
-      move_sprite(1, bullets->bulletPosition[0], bullets->bulletPosition[1]);
+      bullets->bulletPosition[Y_POSITION]--;
+      move_sprite(1, bullets->bulletPosition[X_POSITION], bullets->bulletPosition[Y_POSITION]);
 
     }
       
@@ -53,19 +52,18 @@ int *initializePlayer(){
     playerPosition[1] = PLAYER_Y_START;
     set_sprite_data(0,1,Turret);
     set_sprite_tile(0,0);
-    move_sprite(0, playerPosition[0], playerPosition[1]);
+    move_sprite(0, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
 
     return 0; 
 }
 
 BulletStruct * addBullet(){
   BulletStruct *b  = malloc(sizeof(BulletStruct));
-  b->bulletPosition[0] = playerPosition[0];
-  b->bulletPosition[1] = playerPosition[1];
+  b->bulletPosition[X_POSITION] = playerPosition[X_POSITION];
+  b->bulletPosition[Y_POSITION] = playerPosition[Y_POSITION];
   set_sprite_data(1, 1, Bullet);
   set_sprite_tile(1, 1);
-  move_sprite(1, playerPosition[0], playerPosition[1]);
-
+  move_sprite(1, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
   return b;
 }
 
