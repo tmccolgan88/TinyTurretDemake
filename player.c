@@ -1,6 +1,4 @@
-#include <gb/gb.h>
 #include <stdlib.h>
-#include "globvars.h"
 #include "./assets/turret.c"
 #include "./assets/bullet.c"
 

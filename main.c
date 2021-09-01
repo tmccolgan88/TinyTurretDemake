@@ -1,6 +1,7 @@
 #include <gb/gb.h>
 #include <stdio.h>
 #include <gb/font.h>
+#include "globvars.h"
 #include "player.c"
 #include "ground.c"
 
