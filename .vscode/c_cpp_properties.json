@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "c:/gbdk/include/**",
-                "C:/gbdk/include"
+                "C:/gbdk/include",
+                "c:/gbdk/include/gb"
             ],
             "defines": [
                 "_DEBUG",
