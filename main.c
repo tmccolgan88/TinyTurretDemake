@@ -26,7 +26,7 @@ void main(){
     set_interrupts(VBL_IFLAG);
 
     initializePlayer(&mainsc);
-    //initializeGround(&mainsc);
+    initializeGround(&mainsc);
     while(1){
         delay(17);
         playerUpdate();
