@@ -11,6 +11,7 @@ typedef struct BulletStruct{
 int8_t i;
 int playerPosition[2];
 int8_t canFire;
+int8_t timeSinceLastFire;
 int timeSinceLastUpdate;
 int8_t bulletIndex = 0;
 
@@ -88,6 +89,8 @@ int *initializePlayer(int8_t *mainsc){
     set_sprite_tile(0,0);
     move_sprite(0, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
     
+    canFire = 0;
+
     initializeBullets();
 
     return 0; 
