@@ -1,3 +1,12 @@
+/***************************************
+ *  Program main.c
+ *  Author : Tim McColgan
+ * 
+ * 
+ * 
+ * 
+ * 
+ * *************************************/
 #include <gb/gb.h>
 #include <gb/console.h>
 #include <stdio.h>
@@ -5,13 +14,16 @@
 #include "globvars.h"
 #include "player.c"
 #include "ground.c"
+#include "cannon_ball.c"
 
-int initializeGlbalVariables();
+
 
 int8_t spriteCount = 0;
 int8_t mainsc = -1;
 int vbl_count = 0;
 int counter;
+
+int initializeGlbalVariables();
 
 void vbl_increment(){
   ++vbl_count;
@@ -27,10 +39,13 @@ void main(){
 
     initializePlayer(&mainsc);
     initializeGround(&mainsc);
+    initialializeCannonBall(&mainsc);
+
     while(1){
         delay(17);
         playerUpdate();
-
+        
+        //this still isn't right
         if (vbl_count % 30 == 0){
           setCanFire();
           vbl_count = 0;

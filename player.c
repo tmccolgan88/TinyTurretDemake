@@ -21,7 +21,7 @@ BulletStruct *bullets2[3];
 int8_t bulletsUpdate();
 int playerUpdate();
 int * initializePlayer(int8_t *mainsc);
-int initializeBullets();
+int initializeBullets(int8_t *mainsc);
 BulletStruct * addBullet();
 int * getPlayerPosition();
 
@@ -45,11 +45,11 @@ int8_t bulletsUpdate(){
 int playerUpdate(){
     
     //player movement logic
-    if (joypad() & J_LEFT){
+    if ((joypad() & J_LEFT) && playerPosition[0] > LEFT_BOUNDARY){
       playerPosition[X_POSITION]--;
       move_sprite(0, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
     }
-    if(joypad() & J_RIGHT){
+    if((joypad() & J_RIGHT) && playerPosition[0] < RIGHT_BOUNDARY){
       playerPosition[0]++;
       move_sprite(0, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
     }
@@ -65,13 +65,13 @@ int playerUpdate(){
     return 0;
 }
 
-int initializeBullets(){
+int initializeBullets(int8_t *mainsc){
   for (i = 0; i < 3; i++){
     bullets2[i] = malloc(sizeof(BulletStruct));
     bullets2[i]->bulletPosition[X_POSITION] = SPRITE_LOAD_POSITION_X + i;
     bullets2[i]->bulletPosition[Y_POSITION] = SPRITE_LOAD_POSITION_Y + i;
     bullets2[i]->active = 0;
-    set_sprite_tile(i + 1, 1);
+    set_sprite_tile(++*mainsc, 1);
     move_sprite(i + 1, bullets2[i]->bulletPosition[X_POSITION] = SPRITE_LOAD_POSITION_X, 
                        bullets2[i]->bulletPosition[Y_POSITION] = SPRITE_LOAD_POSITION_Y);
   }
@@ -82,28 +82,18 @@ int initializeBullets(){
 int *initializePlayer(int8_t *mainsc){
     playerPosition[0] = PLAYER_X_START;
     playerPosition[1] = PLAYER_Y_START;
-    set_sprite_data(++*mainsc,1,Turret);
-    set_sprite_data(++*mainsc,1,Bullet);
-    set_sprite_data(++*mainsc,1,Bullet);
-    set_sprite_data(++*mainsc,1,Bullet);
-    set_sprite_tile(0,0);
+
+    set_sprite_data(TURRET_TILE,1,Turret);
+    set_sprite_data(BULLET_TILE,1,Bullet);
+
+    set_sprite_tile(++*mainsc,0);
     move_sprite(0, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
     
     canFire = 0;
 
-    initializeBullets();
+    initializeBullets(mainsc);
 
     return 0; 
-}
-
-BulletStruct * addBullet(){
-  BulletStruct *b  = malloc(sizeof(BulletStruct));
-  b->bulletPosition[X_POSITION] = playerPosition[X_POSITION];
-  b->bulletPosition[Y_POSITION] = playerPosition[Y_POSITION];
-  //set_sprite_data(1, 1, Bullet);
-  set_sprite_tile(1, 1);
-  move_sprite(1, playerPosition[X_POSITION], playerPosition[Y_POSITION]);
-  return b;
 }
 
 int8_t fireBullet(){
