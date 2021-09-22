@@ -28,7 +28,7 @@ int * getPlayerPosition();
 int8_t bulletsUpdate(){
   for (i = 0; i < 3; i++){
     if (bullets2[i]->active == 1){
-      --bullets2[i]->bulletPosition[Y_POSITION];
+      bullets2[i]->bulletPosition[Y_POSITION] = bullets2[i]->bulletPosition[Y_POSITION] - 2;
       move_sprite(i + 1, 
                   bullets2[i]->bulletPosition[X_POSITION], 
                   bullets2[i]->bulletPosition[Y_POSITION]);

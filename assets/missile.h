@@ -24,8 +24,8 @@
 
 
 /* Bank of tiles. */
-#define MissileBank 0
+#define MissileLabelBank 0
 /* Start of tile array. */
-extern unsigned char Missile[];
+extern unsigned char MissileLabel[];
 
 /* End of MISSILE.H */
