@@ -17,3 +17,15 @@
 
 //enum definitions
 typedef enum {true, false} bool;
+
+//typedef struct definitions 
+typedef struct SpriteData{
+  int8_t spritePosition[2];
+  int8_t spriteIndex;
+} SpriteData;
+
+typedef struct BulletStruct{
+  int8_t bulletPosition[2];
+  int8_t velocity;
+  int8_t active;
+}BulletStruct;

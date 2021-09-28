@@ -2,11 +2,6 @@
 #include "./assets/turret.c"
 #include "./assets/bullet.c"
 
-typedef struct BulletStruct{
-  int8_t bulletPosition[2];
-  int8_t velocity;
-  int8_t active;
-}BulletStruct;
 
 int8_t i;
 int8_t playerPosition[2];

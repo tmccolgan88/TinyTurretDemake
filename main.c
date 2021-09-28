@@ -20,7 +20,9 @@ int8_t mainsc = -1; //main sprite count
 int vbl_count = 0;  //vertical blank counter
 int counter;
 
-int initializeGlbalVariables();
+SpriteData *cannonBalls;
+
+int initializeGlobalVariables();
 
 void vbl_increment(){
   ++vbl_count;
@@ -36,7 +38,7 @@ void main(){
 
     initializePlayer(&mainsc);
     initializeGround(&mainsc);
-    initialializeCannonBall(&mainsc);
+    cannonBalls = initialializeCannonBall(&mainsc);
 
     while(1){
         delay(17);
