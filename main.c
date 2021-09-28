@@ -16,11 +16,8 @@
 #include "ground.c"
 #include "cannon_ball.c"
 
-
-
-int8_t spriteCount = 0;
-int8_t mainsc = -1;
-int vbl_count = 0;
+int8_t mainsc = -1; //main sprite count
+int vbl_count = 0;  //vertical blank counter
 int counter;
 
 int initializeGlbalVariables();
