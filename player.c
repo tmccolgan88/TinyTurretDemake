@@ -2,7 +2,6 @@
 #include "./assets/turret.c"
 #include "./assets/bullet.c"
 
-
 int8_t i;
 int8_t playerPosition[2];
 int8_t canFire;
